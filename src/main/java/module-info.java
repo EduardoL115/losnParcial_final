@@ -1,4 +1,4 @@
-module org.example.parcial3 {
+module org.example.parcial_3 {
     requires javafx.controls;
     requires javafx.fxml;
 
