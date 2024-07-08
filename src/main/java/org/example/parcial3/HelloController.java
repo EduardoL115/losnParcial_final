@@ -1,12 +1,20 @@
 package org.example.parcial3;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 
 public class HelloController {
 
@@ -17,6 +25,10 @@ public class HelloController {
     Connection cn = DB.getInstance();
 
     Statement st = cn.createStatement();
+
+    private Parent root;
+    private Scene scene;
+    private Stage stage;
 
     private String id;
     @FXML
@@ -79,19 +91,13 @@ public class HelloController {
         mostrarClientes();
     }
     @FXML
-    public void tarjetaPanel(){
-        tarjetaAplication tp = new tarjetaAplication();
-        Stage stg = new Stage();
+    public void tarjetaPanel(ActionEvent event)throws IOException {
 
-        ((Stage) nombreCompletoTxt.getScene().getWindow()).close();
-
-        try{
-            tp.start(stg);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        stg.show();
-
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("tarjeta.fxml")));//
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow(); // 00382523 dois y yo en cafeina y nicotina sabe
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public String getId() {
