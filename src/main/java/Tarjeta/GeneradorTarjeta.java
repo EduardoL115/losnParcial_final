@@ -39,7 +39,7 @@ public class GeneradorTarjeta {
         return (10 - (sum % 10)) % 10;
     }*/
 
-    public static boolean isValid(long number)
+    public boolean isValid(long number)
     {
         return (getSize(number) >= 13 &&
                 getSize(number) <= 16) &&
