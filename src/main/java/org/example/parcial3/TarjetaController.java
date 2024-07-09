@@ -51,18 +51,25 @@ public class TarjetaController {
     @FXML
     public ListView listaTarjeta;
 
+    @FXML
+    public Label error;
+
     private String id = "0";
+
+    GeneradorTarjeta generadorTarjeta = new GeneradorTarjeta();
+
 
     public TarjetaController() throws SQLException {}
 
     @FXML
     public void initialize() throws SQLException {
         mostrarTarjetas();
-        setFacilitador();
+        //setFacilitador();
         //generarNumeroTarjeta();
     }
     @FXML
     public void mostrarTarjetas() throws SQLException {
+        listaTarjeta.getItems().clear();
         String query = "SELECT t.id,t.numero_tarjeta,t.fecha_expiracion, f.nombre " +
                 "FROM TARJETA as t inner join FACILITADOR as f on t.FK_id_facilitador = f.id " +
                 "WHERE t.FK_id_cliente = ?";
@@ -90,13 +97,55 @@ public class TarjetaController {
                         numeroTarjetaTxt.setText(a);
                     }else if(i == 3 ){
                         fechaExpiracion.setValue( LocalDate.parse(a));
-                    }else if(i == 4 ){
-                        facilitador.setValue(a);
                     }
                     i++;
                 }
             }
         });
+    }
+
+    public void agregarTarjeta() throws SQLException {
+        if(!numeroTarjetaTxt.getText().isBlank() || fechaExpiracion.getValue() != null) {
+            if (generadorTarjeta.isValid(Long.parseLong(numeroTarjetaTxt.getText()))) {
+                pst = cn.prepareStatement("INSERT INTO TARJETA (numero_tarjeta,fecha_expiracion,FK_id_facilitador,FK_id_cliente) VALUES (?,?,?,?)");
+                pst.setString(1, numeroTarjetaTxt.getText());
+                pst.setDate(2, Date.valueOf(fechaExpiracion.getValue()));
+                pst.setInt(3, generadorTarjeta.getFacilitador(Long.parseLong(numeroTarjetaTxt.getText())));
+                pst.setInt(4, Integer.parseInt(idCliente.getText()));
+                pst.executeUpdate();
+                mostrarTarjetas();
+                error.setText(" ");
+            } else {
+                error.setText("*Ingrese una tarjeta valida!");
+            }
+        }else{
+            error.setText("*Debe ingresar los datos que se le piden en las casillas!");
+        }
+    }
+    @FXML
+    public void eliminarTarjeta() throws SQLException {
+        pst = cn.prepareStatement("DELETE FROM TARJETA WHERE id = ?");
+        pst.setInt(1, Integer.parseInt(idCliente.getText()));
+        pst.executeUpdate();
+        numeroTarjetaTxt.setText(" ");
+        fechaExpiracion.setValue(null);
+        mostrarTarjetas();
+    }
+
+    @FXML
+    public void actualizarTarjeta() throws SQLException {
+        if(generadorTarjeta.isValid(Long.parseLong(numeroTarjetaTxt.getText()))) {
+            pst = cn.prepareStatement("UPDATE TARJETA SET numero_tarjeta = ?, fecha_expiracion = ?, FK_id_facilitador = ? WHERE id = ?");
+            pst.setString(1, numeroTarjetaTxt.getText());
+            pst.setDate(2, Date.valueOf(fechaExpiracion.getValue()));
+            pst.setInt(3,generadorTarjeta.getFacilitador(Long.parseLong(numeroTarjetaTxt.getText())) );
+            pst.setInt(4, Integer.parseInt(id));
+            pst.executeUpdate();
+            mostrarTarjetas();
+            error.setText(" ");
+        }else{
+            error.setText("*Ingrese una tarjeta valida!");
+        }
     }
 
     public void obtenerId(String id) throws SQLException {
@@ -105,12 +154,12 @@ public class TarjetaController {
         mostrarTarjetas();
     }
 
-    public void setFacilitador() throws SQLException {
+    /*public void setFacilitador() throws SQLException {
         rs = st.executeQuery("SELECT nombre FROM FACILITADOR ");
         while (rs.next()) {
             facilitador.getItems().add(rs.getString("nombre"));
         }
-    }
+    }*/
     @FXML
     private void volver(ActionEvent event) throws IOException {
         try {
