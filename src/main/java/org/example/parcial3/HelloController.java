@@ -26,6 +26,8 @@ public class HelloController {
 
     Statement st = cn.createStatement();
 
+
+
     private Parent root;
     private Scene scene;
     private Stage stage;
@@ -67,7 +69,7 @@ public class HelloController {
                 for (String a : arrOfStr) {
                     if(i == 1){
                         setId(a);
-                        System.out.println(getId());
+                        //System.out.println(getId());
                     }else if(i == 2 && a != null){
                         nombreCompletoTxt.setText(a);
                     }else if(i == 3 && a != null){
@@ -91,10 +93,14 @@ public class HelloController {
         mostrarClientes();
     }
     @FXML
-    public void tarjetaPanel(ActionEvent event)throws IOException {
+    public void tarjetaPanel(ActionEvent event) throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("tarjeta.fxml")));
 
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("tarjeta.fxml")));//
+        root = fxmlLoader.load();//
+        TarjetaController tc = fxmlLoader.getController();
+        tc.obtenerId(id);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow(); // 00382523 dois y yo en cafeina y nicotina sabe
+
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

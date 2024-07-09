@@ -13,7 +13,7 @@ public final class DB {
             try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-                String url = "jdbc:sqlserver://LAPTOP-Q8NBL7TT\\MSSQLSERVER03\\MSSQLSERVER03:1433;databaseName=POOPARCIAL3;integratedSecurity=true;encrypt=false;";
+                String url = "jdbc:sqlserver://localhost\\MSSQLSERVER03\\MSSQLSERVER03:1433;databaseName=POOPARCIAL3;integratedSecurity=true;encrypt=false;";
 
                 cn = DriverManager.getConnection(url);
 

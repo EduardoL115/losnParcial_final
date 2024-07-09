@@ -1,5 +1,11 @@
 package org.example.parcial3;
 
+import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.Objects;
+
+import Tarjeta.GeneradorTarjeta;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,11 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.sql.*;
-import java.time.LocalDate;
-import java.util.Objects;
 
 public class TarjetaController {
 
@@ -45,24 +46,31 @@ public class TarjetaController {
     @FXML
     public ListView listaTarjeta;
 
+    private String id = "0";
+
     public TarjetaController() throws SQLException {}
 
     @FXML
     public void initialize() throws SQLException {
         mostrarTarjetas();
         setFacilitador();
+        //generarNumeroTarjeta();
     }
-        //LAPTOP-Q8NBL7TT
     @FXML
     public void mostrarTarjetas() throws SQLException {
-       // lista.getItems().clear();
-        rs = st.executeQuery("SELECT t.id,t.numero_tarjeta,t.fecha_expiracion, f.nombre FROM TARJETA as t inner join FACILITADOR as f on t.FK_id_facilitador = f.id");
+        String query = "SELECT t.id,t.numero_tarjeta,t.fecha_expiracion, f.nombre " +
+                "FROM TARJETA as t inner join FACILITADOR as f on t.FK_id_facilitador = f.id " +
+                "WHERE t.FK_id_cliente = ?";
+
+        pst = cn.prepareStatement(query);
+        pst.setInt(1, Integer.parseInt(id));
+
+        rs = pst.executeQuery();
 
         while(rs.next()){
             String record = rs.getInt("id") + "/" + rs.getString("numero_tarjeta") + "/" + rs.getDate("fecha_expiracion") + "/" + rs.getString("nombre") + "/";
             listaTarjeta.getItems().add(record);
         }
-        //idCliente.setText();
 
         listaTarjeta.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -78,21 +86,19 @@ public class TarjetaController {
                     }else if(i == 3 ){
                         fechaExpiracion.setValue( LocalDate.parse(a));
                     }else if(i == 4 ){
-                       facilitador.setValue(a);
+                        facilitador.setValue(a);
                     }
                     i++;
                 }
             }
         });
     }
-   /* public void insercionClientes() throws SQLException {
-        pst = cn.prepareStatement("INSERT INTO CLIENTE (nombre_completo,direccion,telefono) VALUES (?,?,?)");
-        pst.setString(1, nombreCompletoTxt.getText());
-        pst.setString(2, direccionTxt.getText());
-        pst.setString(3, telefonoTxt.getText());
-        pst.executeUpdate();
-        mostrarClientes();
-    }*/
+
+    public void obtenerId(String id) throws SQLException {
+        this.id = id;
+        idCliente.setText(id);
+        mostrarTarjetas();
+    }
 
     public void setFacilitador() throws SQLException {
         rs = st.executeQuery("SELECT nombre FROM FACILITADOR ");
@@ -109,7 +115,11 @@ public class TarjetaController {
         stage.setScene(scene);
         stage.show();
     }
+   /* @FXML
+    public void generarNumeroTarjeta() {
+        String nuevoNumeroTarjeta = GeneradorTarjeta.generadorTarjeta();
+        numeroTarjetaTxt.setText(nuevoNumeroTarjeta);
+        System.out.println(nuevoNumeroTarjeta);
+    }*/
 }
-
-
 

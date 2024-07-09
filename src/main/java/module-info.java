@@ -1,4 +1,4 @@
-module com.example.parcialfinal_eduardo_linares {
+module org.example.parcial3 {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.base;
@@ -8,6 +8,6 @@ module com.example.parcialfinal_eduardo_linares {
     requires java.sql;
     requires com.microsoft.sqlserver.jdbc;
 
-    opens com.example.parcialfinal_eduardo_linares to javafx.fxml;
-    exports com.example.parcialfinal_eduardo_linares;
+    opens org.example.parcial3 to javafx.fxml;
+    exports org.example.parcial3;
 }
