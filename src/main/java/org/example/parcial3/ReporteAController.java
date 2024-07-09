@@ -1,9 +1,12 @@
 package org.example.parcial3;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
@@ -26,29 +29,43 @@ public class ReporteAController {
     String datosReporte; //00377223 cadena donde estaran los datos del reporte
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss"); //00377223 se crea un formato de fecha para guardar la fecha en el formato que se dio
-    Date date = new Date(); //00377223 se crea un objeto de la fecha actual
-    String ruta = "src/main/resources/Reportes/Reporte A - " + formatter.format(date) + ".txt"; //00377223 el reporte se guardara en la carpeta de Reportes y tendra en su nombre el tipo de reporte y la fecha y hora actual
-
 
     @FXML
-    public void mostrarReporte() throws SQLException {//00377223 se ejecuta cuando se presiona el boton Mostrar Reporte
-        txtVistaPrevia.setText(reporte());//00377223 coloca el reporte dentro del txtArea de vista previa
+    public void onMostrarReporte() throws SQLException {//00377223 se ejecuta cuando se presiona el boton Mostrar Reporte
+        if (txtIDUsuario.getText().isEmpty() || dateFechaInicio == null || dateFechaFin == null) {//00377223 condicion por si los parametros estan vacios
+            Alert alert = new Alert(Alert.AlertType.ERROR);//00377223 el tipo de alerta es de un error
+            alert.setTitle("Error");//00377223 se setea un titulo para la alerta
+            alert.setHeaderText("Rellene todos los datos.");//00377223 texto que se encuentra dentro de la caja de error
+            alert.showAndWait();//00377223 muestra la caja de error en pantalla
+        }
+        else {
+            txtVistaPrevia.setText(reporte());//00377223 si todos los textos estan llenos, se puede mostrar el reporte
+        }
     }
 
     @FXML
-    public void guardarReporte() throws SQLException {//00377223 se encarga de guardar el reporte con la ruta que ya se instancio
-        try { //00377223 try para guardar el archivo en la ruta
-            FileWriter writer =new FileWriter(ruta); //00377223 se crea un nuevo archivo y se pasa la ruta del reporte que ya se creo
-            writer.write(reporte()); //00377223 se escribe lo que hay en el reporte
-            writer.close(); //00377223 se cierra el writer para no generar conflictos
-        } catch (IOException e) {//00377223 por si no puede encontrar la ruta
-            throw new RuntimeException(e);//00377223 causa del error
-        }
+    public void onGuardarReporte() throws SQLException {//00377223 se encarga de guardar el reporte con la ruta que ya se instancio
+        if (txtIDUsuario.getText().isEmpty() || dateFechaInicio == null || dateFechaFin == null) {//00377223 condicion por si los parametros estan vacios
+            Alert alert = new Alert(Alert.AlertType.ERROR);//00377223 el tipo de alerta es de un error
+            alert.setTitle("Error");//00377223 se setea un titulo para la alerta
+            alert.setHeaderText("Rellene todos los datos.");//00377223 texto que se encuentra dentro de la caja de error
+            alert.showAndWait();//00377223 muestra la caja de error en pantalla
+        } else {
+            Date date = new Date(); //00377223 se crea un objeto de la fecha actual
+            String ruta = "src/main/resources/Reportes/Reporte A - " + formatter.format(date) + ".txt"; //00377223 el reporte se guardara en la carpeta de Reportes y tendra en su nombre el tipo de reporte y la fecha y hora actual
+
+            try(BufferedWriter writer = new BufferedWriter(new FileWriter(ruta))){//00377223 se crea un buffer que tiene de parametro al reporte que queremos crear y guardar
+                writer.write(reporte());//00377223 se escribe lo que hay en el reporte
+            } catch (IOException e) {//00377223 por si no puede encontrar la ruta
+                throw new RuntimeException(e);//00377223 causa del error
+            }
+            //00377223 el buffer se cierra solo
 
         txtVistaPrevia.clear();//00377223 se limpia la vista previa una vez ya se ha guardado el reporte
-        txtIDUsuario.clear();//00377223 se limpia el txtField de id una vez ya se guardo el reporte
-        dateFechaInicio.setValue(null);//00377223 resetea el dateFehaInicio una vez ya se guardo el reporte
-        dateFechaFin.setValue(null);//00377223 resetea el dateFechaFin una vez ya se guardo el archivo
+            txtIDUsuario.clear();//00377223 se limpia el txtField de id una vez ya se guardo el reporte
+            dateFechaInicio.setValue(null);//00377223 resetea el dateFehaInicio una vez ya se guardo el reporte
+            dateFechaFin.setValue(null);//00377223 resetea el dateFechaFin una vez ya se guardo el archivo
+        }
     }
 
     public String reporte() throws SQLException {//00377223 regresa el reporte en cadena de texto, para las demas funciones

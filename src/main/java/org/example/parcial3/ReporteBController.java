@@ -1,8 +1,11 @@
 package org.example.parcial3;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +19,7 @@ public class ReporteBController {
     @FXML
     public TextField txtIDUsuario;//00377223 id asignado al id del cliente
     @FXML
-    public TextField txtMes;//00377223 id asignado al mes
+    public TextField txtMes;
     @FXML
     public TextField txtAnio;//00377223 id asignado al anio
     @FXML
@@ -28,29 +31,44 @@ public class ReporteBController {
     String datosReporte;  //00377223 cadena donde estaran los datos del reporte
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss"); //00377223 se crea un formato de fecha para guardar la fecha en el formato que se dio
-    Date date = new Date(); //00377223 se crea un objeto de la fecha actual
-
-    String url = "src/main/resources/Reportes/Reporte B - " + formatter.format(date) + ".txt"; //00377223 el reporte se guardara en la carpeta de Reportes y tendra en su nombre el tipo de reporte y la fecha y hora actual
 
     @FXML
     public void mostrarReporte() throws SQLException {//00377223 se ejecuta cuando se presiona el boton Mostrar Reporte
-        txtVistaPrevia.setText(reporte());//00377223 coloca el reporte dentro del txtArea de vista previa
+        if (txtIDUsuario.getText().isEmpty() || txtMes.getText().isEmpty() || txtAnio.getText().isEmpty()) {//00377223 condicion por si los parametros estan vacios
+            Alert alert = new Alert(Alert.AlertType.ERROR);//00377223 el tipo de alerta es de un error
+            alert.setTitle("Error");//00377223 se setea un titulo para la alerta
+            alert.setHeaderText("Rellene todos los datos.");//00377223 texto que se encuentra dentro de la caja de error
+            alert.showAndWait();//00377223 muestra la caja de error en pantalla
+        }
+        else {
+            txtVistaPrevia.setText(reporte());//00377223 coloca el reporte dentro del txtArea de vista previa
+        }
     }
 
     @FXML
     public void guardarReporte() throws SQLException {//00377223 se encarga de guardar el reporte con la ruta que ya se instancio
-        try {//00377223 try para guardar el archivo en la ruta
-            FileWriter writer =new FileWriter(url);//00377223 se crea un nuevo archivo y se pasa la ruta del reporte que ya se creo
-            writer.write(reporte());//00377223 se escribe lo que hay en el reporte
-            writer.close(); //00377223 se cierra el writer para no generar conflictos
-        } catch (IOException e) {//00377223 por si no puede encontrar la ruta
-            throw new RuntimeException(e);//00377223 causa del error
+        if (txtIDUsuario.getText().isEmpty() || txtMes.getText().isEmpty() || txtAnio.getText().isEmpty()) {//00377223 condicion por si los parametros estan vacios
+            Alert alert = new Alert(Alert.AlertType.ERROR);//00377223 el tipo de alerta es de un error
+            alert.setTitle("Error");//00377223 se setea un titulo para la alerta
+            alert.setHeaderText("Rellene todos los datos.");//00377223 texto que se encuentra dentro de la caja de error
+            alert.showAndWait();//00377223 muestra la caja de error en pantalla
         }
+        else {
+            Date date = new Date(); //00377223 se crea un objeto de la fecha actual
+            String ruta = "src/main/resources/Reportes/Reporte B - " + formatter.format(date) + ".txt"; //00377223 el reporte se guardara en la carpeta de Reportes y tendra en su nombre el tipo de reporte y la fecha y hora actual
 
-        txtIDUsuario.clear();//00377223 se limpia el txtField de id una vez ya se guardo el reporte
-        txtAnio.clear();//00377223 se limpia el txtField de anio una vez ya se guardo el reporte
-        txtMes.clear();//00377223 se limpia el txtField de mes una vez ya se guardo el reporte
-        txtVistaPrevia.clear();//00377223 se limpia el txtField de vista previa una vez ya se guardo el reporte
+            try(BufferedWriter writer = new BufferedWriter(new FileWriter(ruta))){//00377223 se crea un buffer que tiene de parametro al reporte que queremos crear y guardar
+                writer.write(reporte());//00377223 se escribe lo que hay en el reporte
+            } catch (IOException e) {//00377223 por si no puede encontrar la ruta
+                throw new RuntimeException(e);//00377223 causa del error
+            }
+            //00377223 el buffer se cierra solo
+
+            txtVistaPrevia.clear();//00377223 se limpia la vista previa una vez ya se ha guardado el reporte
+            txtIDUsuario.clear();//00377223 se limpia el txtField de id una vez ya se guardo el reporte
+            txtAnio.clear();//00377223 se limpia el txtField de anio una vez ya se guardo el reporte
+            txtMes.clear();//00377223 se limpia el txtField de mes una vez ya se guardo el reporte
+        }
     }
 
     public String reporte() throws SQLException {//00377223 regresa el reporte en cadena de texto, para las demas funciones
