@@ -47,9 +47,9 @@
    <top>
       <Pane prefHeight="80.0" prefWidth="626.0" style="-fx-background-color: #4D6D71;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="131.0" layoutY="7.0" prefHeight="72.0" prefWidth="370.0" text="Compania culera de mierda" textAlignment="JUSTIFY">
+            <Label layoutX="131.0" layoutY="7.0" prefHeight="72.0" prefWidth="525.0" text="Banco Central de Nlogonia" textAlignment="JUSTIFY">
                <font>
-                  <Font size="29.0" />
+                  <Font name="Franklin Gothic Demi" size="43.0" />
                </font>
             </Label>
          </children>
