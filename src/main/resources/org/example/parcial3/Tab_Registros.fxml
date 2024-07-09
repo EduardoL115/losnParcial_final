@@ -5,19 +5,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="319.0" prefWidth="519.0" style="-fx-background-color: #90C5CC; -fx-min-height: 100%; -fx-min-width: 100%;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.Tab_RegistrosController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #90C5CC; -fx-min-height: 100%; -fx-min-width: 100%;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.Tab_RegistrosController" fx:id="ancPane">
    <children>
-      <Button onAction="#RegistroCliente" contentDisplay="CENTER" layoutX="32.0" layoutY="127.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="149.0" text="Agregar cliente" textAlignment="JUSTIFY">
+      <Button fx:id="clientes" contentDisplay="CENTER" layoutX="52.0" layoutY="151.0" mnemonicParsing="false" onAction="#RegistroCliente" prefHeight="99.0" prefWidth="149.0" text="Agregar cliente" textAlignment="JUSTIFY">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button contentDisplay="CENTER" layoutX="317.0" layoutY="127.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="149.0" text="compras">
+      <Button contentDisplay="CENTER" layoutX="371.0" layoutY="151.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="149.0" text="compras">
          <font>
             <Font size="19.0" />
          </font>
       </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" prefHeight="64.0" prefWidth="314.0" text="Registrar">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="143.0" prefHeight="64.0" prefWidth="314.0" text="Registrar">
          <font>
             <Font size="61.0" />
          </font>

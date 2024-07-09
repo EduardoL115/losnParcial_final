@@ -3,27 +3,43 @@ package org.example.parcial3;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class Tab_RegistrosController {
+public class Tab_RegistrosController implements Initializable {
 
-    private Parent root;
-    private Scene scene;
-    private Stage stage;
+
 
     @FXML
-    public void RegistroCliente(ActionEvent event)throws IOException {
+    private AnchorPane ancPane;
 
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));//
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow(); // 00382523 dois y yo en cafeina y nicotina sabe
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
+
+    @FXML
+    private void RegistroCliente(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+            AnchorPane view = loader.load();
+            HelloController controller = loader.getController();
+            try {
+                controller.initialize();
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            ancPane.getChildren().setAll(view);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
 }
