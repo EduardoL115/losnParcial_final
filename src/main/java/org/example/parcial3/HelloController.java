@@ -4,19 +4,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class HelloController {
+public class HelloController implements Initializable {
 
     ResultSet rs;
 
@@ -28,10 +28,9 @@ public class HelloController {
 
 
 
-    private Parent root;
-    private Scene scene;
-    private Stage stage;
 
+    @FXML
+    private AnchorPane ancPane;
     private String id;
     @FXML
     public ListView lista;
@@ -92,18 +91,26 @@ public class HelloController {
         pst.executeUpdate();
         mostrarClientes();
     }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
+
     @FXML
-    public void tarjetaPanel(ActionEvent event) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("tarjeta.fxml")));
-
-        root = fxmlLoader.load();//
-        TarjetaController tc = fxmlLoader.getController();
-        tc.obtenerId(id);
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow(); // 00382523 dois y yo en cafeina y nicotina sabe
-
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private void RegistrarTarjeta(ActionEvent event) throws IOException {
+        try {
+            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("tarjeta.fxml")));
+            ancPane.getChildren().setAll(view);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    private void volver(ActionEvent event) throws IOException {
+        try {
+            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Tab_Registros.fxml")));
+            ancPane.getChildren().setAll(view);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getId() {

@@ -15,10 +15,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class TarjetaController {
 
+   @FXML
+   private AnchorPane ancPane;
     ResultSet rs;
 
     PreparedStatement pst;
@@ -30,6 +33,8 @@ public class TarjetaController {
     private Parent root;
     private Scene scene;
     private Stage stage;
+
+
 
     @FXML
     public TextField numeroTarjetaTxt;
@@ -107,13 +112,13 @@ public class TarjetaController {
         }
     }
     @FXML
-    public void volver(ActionEvent event)throws IOException {
-
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));//
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow(); // 00382523 dois y yo en cafeina y nicotina sabe
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private void volver(ActionEvent event) throws IOException {
+        try {
+            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+            ancPane.getChildren().setAll(view);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
    /* @FXML
     public void generarNumeroTarjeta() {
