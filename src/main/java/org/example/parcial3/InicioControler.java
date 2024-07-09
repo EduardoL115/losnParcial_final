@@ -1,4 +1,4 @@
-package org.example.parcial3;
+package org.example.parciaal3;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.EventListener;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -53,6 +52,7 @@ public class InicioControler implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     public void exit(ActionEvent event){
         Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
@@ -64,5 +64,5 @@ public class InicioControler implements Initializable {
         }
     }
 
-
+    
 }
