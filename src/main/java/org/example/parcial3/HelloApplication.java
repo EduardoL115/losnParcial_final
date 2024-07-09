@@ -16,16 +16,16 @@ public class HelloApplication extends Application {
         stage.setTitle("Chamba2!");
         stage.setScene(scene);
         stage.show();*/
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("Inicio.fxml"));
-            Scene scene1 = new Scene(root);
-            stage.setScene(scene1);
-            stage.show();
-        }catch (Exception e){e.printStackTrace();}
+        try {//try encontrar el fxml
+            Parent root = FXMLLoader.load(getClass().getResource("Inicio.fxml"));// primera ecena mostrada
+            Scene scene1 = new Scene(root);//guradando ecena
+            stage.setScene(scene1);//implementando ecena en el stage
+            stage.show();//mostrando en pantalla
+        }catch (Exception e){e.printStackTrace();} // catch en el caso que la scene no se encuentre fxml
 
     }
 
     public static void main(String[] args) {
-        launch();
+        launch();// comienza la aplicacion
     }
 }

@@ -114,7 +114,14 @@ public class TarjetaController {
     @FXML
     private void volver(ActionEvent event) throws IOException {
         try {
-            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+            AnchorPane view = loader.load();
+            HelloController controller = loader.getController();
+            try {
+                controller.initialize();
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             ancPane.getChildren().setAll(view);
         } catch (IOException e) {
             throw new RuntimeException(e);

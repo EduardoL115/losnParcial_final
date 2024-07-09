@@ -1,4 +1,4 @@
-package org.example.parciaal3;
+package org.example.parcial3;
 
 public class ReporteBController {
 }

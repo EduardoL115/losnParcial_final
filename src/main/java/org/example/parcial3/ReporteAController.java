@@ -1,9 +1,11 @@
-package org.example.parciaal3;
+package org.example.parcial3;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import org.example.parcial3.DB;
+
 import java.sql.*;
 
 public class ReporteAController {
