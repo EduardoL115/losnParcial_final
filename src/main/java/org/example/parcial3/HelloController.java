@@ -21,13 +21,13 @@ import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
 
-    ResultSet rs;
+    ResultSet rs; // resultados de query
 
-    PreparedStatement pst;
+    PreparedStatement pst; // statemenet a mandar a la query
 
-    Connection cn = DB.getInstance();
+    Connection cn = DB.getInstance();// singolton de la base de datos
 
-    Statement st = cn.createStatement();
+    Statement st = cn.createStatement();// statement de la query
 
 
 
@@ -45,7 +45,7 @@ public class HelloController implements Initializable {
     public TextField telefonoTxt;// id asignado a textfeild
 
     @FXML
-    public Label error;
+    public Label error; // id asignado a label que muestra error
 
 
 
@@ -63,33 +63,32 @@ public class HelloController implements Initializable {
      * @throws SQLException
      */
     @FXML
-    public void mostrarClientes() throws SQLException {
-        lista.getItems().clear();
-        rs = st.executeQuery("SELECT * FROM CLIENTE");
+    public void mostrarClientes() throws SQLException { // funcio muestra  la  lista de clientes
+        lista.getItems().clear();// limpia la lista
+        rs = st.executeQuery("SELECT * FROM CLIENTE"); // devuelve resultados de query
 
         while(rs.next()){
-            String record = rs.getInt("id") + "/" + rs.getString("nombre_completo") + "/" + rs.getString("direccion") + "/" + rs.getString("telefono") + "/";
-            lista.getItems().add(record);
+            String record = rs.getInt("id") + "/" + rs.getString("nombre_completo") + "/" + rs.getString("direccion") + "/" + rs.getString("telefono") + "/";lista.getItems().add(record); // busca las feilds y las asigna a sus correspondientes lugares
         }
 
-        lista.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        lista.setOnMouseClicked(new EventHandler<MouseEvent>() { // revisa los clicks en la lista
             @Override
-            public void handle(MouseEvent mouseEvent) {
+            public void handle(MouseEvent mouseEvent) { // busca los events de el mous click y selecciona el item de la lista
 
-                String str = lista.getSelectionModel().getSelectedItem().toString();
-                String[] arrOfStr = str.split("/");
-                int i = 1;
-                for (String a : arrOfStr) {
-                    if(i == 1){
-                        setId(a);
-                    }else if(i == 2 && a != null){
-                        nombreCompletoTxt.setText(a);
-                    }else if(i == 3 && a != null){
-                        direccionTxt.setText(a);
-                    }else if(i == 4 && a != null){
-                        telefonoTxt.setText(a);
+                String str = lista.getSelectionModel().getSelectedItem().toString(); // pasa el item seleccionado de la lista a string
+                String[] arrOfStr = str.split("/");//separa la string en otras cada "/" y  los guarda en un array de string
+                int i = 1; // inicio de contador
+                for (String a : arrOfStr) { // traversa el array de string
+                    if(i == 1){ //si contador = 1
+                        setId(a); // muestra el id  en a
+                    }else if(i == 2 && a != null){ // si el la string existe y contador 2
+                        nombreCompletoTxt.setText(a);// pone el nombre de el id en el textfeild
+                    }else if(i == 3 && a != null){ // si la string no es nula y contador =3
+                        direccionTxt.setText(a); // set label a la string a
+                    }else if(i == 4 && a != null){//if contador es 4 y la string a no es nulo
+                        telefonoTxt.setText(a);// set text feild a la string a
                     }
-                    i++;
+                    i++;//aumentar counter
                 }
             }
         });
@@ -100,17 +99,17 @@ public class HelloController implements Initializable {
      * @throws SQLException
      */
     @FXML
-    public void insercionClientes() throws SQLException {
-        if(!nombreCompletoTxt.getText().isBlank()|| !direccionTxt.getText().isBlank() || !telefonoTxt.getText().isBlank()) {
-            pst = cn.prepareStatement("INSERT INTO CLIENTE (nombre_completo,direccion,telefono) VALUES (?,?,?)");
-            pst.setString(1, nombreCompletoTxt.getText());
-            pst.setString(2, direccionTxt.getText());
-            pst.setString(3, telefonoTxt.getText());
-            pst.executeUpdate();
-            mostrarClientes();
-            error.setText(" ");
-        }else{
-            error.setText("*Debe ingresar datos para poder guardar al nuevo cliente!");
+    public void insercionClientes() throws SQLException { //
+        if(!nombreCompletoTxt.getText().isBlank()|| !direccionTxt.getText().isBlank() || !telefonoTxt.getText().isBlank()) {// mientras las casillas de datos no esten vacias
+            pst = cn.prepareStatement("INSERT INTO CLIENTE (nombre_completo,direccion,telefono) VALUES (?,?,?)");// crear query
+            pst.setString(1, nombreCompletoTxt.getText());// asignar valores de casilla a querry
+            pst.setString(2, direccionTxt.getText());// asignar valores de casilla a querry
+            pst.setString(3, telefonoTxt.getText());// asignar valores de casilla a querry
+            pst.executeUpdate(); // ejecutar query
+            mostrarClientes(); // volver a cargar los clientes de la lista
+            error.setText(" ");//reiniciar el error
+        }else{// si las casillas estan vacias
+            error.setText("*Debe ingresar datos para poder guardar al nuevo cliente!");//mostrar que las casillas estan vacias
         }
     }
 
@@ -120,26 +119,26 @@ public class HelloController implements Initializable {
      * @throws SQLException
      */
     @FXML
-    public void eliminarCliente() throws SQLException {
-        pst = cn.prepareStatement("DELETE FROM CLIENTE WHERE id = ?");
-        pst.setInt(1, Integer.parseInt(getId()));
-        pst.executeUpdate();
-        nombreCompletoTxt.setText(" ");
-        direccionTxt.setText(" ");
-        telefonoTxt.setText(" ");
-        id = "0";
-        mostrarClientes();
+    public void eliminarCliente() throws SQLException { // funcion para eliminar cliente de la base de datos
+        pst = cn.prepareStatement("DELETE FROM CLIENTE WHERE id = ?"); // query para borrar  el record
+        pst.setInt(1, Integer.parseInt(getId())); // mada el id a borrar
+        pst.executeUpdate(); // ejecuta querry
+        nombreCompletoTxt.setText(" "); // limpia el text feild
+        direccionTxt.setText(" ");// limpia el text feild
+        telefonoTxt.setText(" ");// limpia el text feild
+        id = "0"; // reset id
+        mostrarClientes(); // actualizar lista de clientes
     }
 
     @FXML
-    public void actualziarCliente() throws SQLException {
-        pst = cn.prepareStatement("UPDATE CLIENTE SET nombre_completo = ?, direccion = ?, telefono = ? WHERE id = ?");
-        pst.setString(1, nombreCompletoTxt.getText());
-        pst.setString(2,direccionTxt.getText());
-        pst.setString(3, telefonoTxt.getText());
-        pst.setInt(4, Integer.parseInt(getId()));
-        pst.executeUpdate();
-        mostrarClientes();
+    public void actualziarCliente() throws SQLException { // funcion para modificar los clientes
+        pst = cn.prepareStatement("UPDATE CLIENTE SET nombre_completo = ?, direccion = ?, telefono = ? WHERE id = ?"); // crear query a evaluar
+        pst.setString(1, nombreCompletoTxt.getText()); // ocupa el parametro de la textfeild
+        pst.setString(2,direccionTxt.getText());// ocupa el parametro de la textfeild
+        pst.setString(3, telefonoTxt.getText());// ocupa el parametro de la textfeild
+        pst.setInt(4, Integer.parseInt(getId()));// ocupa el parametro de la textfeild
+        pst.executeUpdate(); // ejecuta la query
+        mostrarClientes(); // actualiza la lista
     }
 
     @Override
@@ -149,7 +148,7 @@ public class HelloController implements Initializable {
     private void RegistrarTarjeta(ActionEvent event) throws IOException { //funcion para el boton de registrar tarjeta, sirve para poder cambiar de escena a la siguiente la cual su funcionalidad es registrar tarjetas
 
         if(getId() != "0") {
-            System.out.println("ENTRO");
+
             try {//try asignar una fxml
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("tarjeta.fxml"))); // crea un objeto de FXMLLoader para guardar la ubicacion de el fxml
                 AnchorPane view = loader.load();//guarda loader y la direccion en el una nuevo Objeto de anchor pane

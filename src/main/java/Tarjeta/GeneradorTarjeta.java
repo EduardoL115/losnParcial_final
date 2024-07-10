@@ -2,123 +2,87 @@ package Tarjeta;
 
 import java.util.Random;
 
-public class GeneradorTarjeta {
+public class GeneradorTarjeta { // verifica que el numero de tarjeta sea valido y tambien devuelve el tipo Facilitador
 
-    /*public static String generadorTarjeta() {
-        String[] prefixes = {"4", "5", "37", "6"};
-        Random random = new Random();
-        String prefix = prefixes[random.nextInt(prefixes.length)];
-        int length = (prefix.equals("37")) ? 15 : random.nextInt(4) + 13; // American Express tiene 15 dígitos, otros entre 13 y 16
 
-        StringBuilder number = new StringBuilder(prefix);
 
-        while (number.length() < length - 1) {
-            number.append(random.nextInt(10));
-        }
-        number.append(validacion(number.toString()));
-
-        return number.toString();
-    }
-
-    /*private static int validacion(String number) {
-        int sum = 0;
-        boolean alternate = true;
-
-        for (int i = number.length() - 1; i >= 0; i--) {
-            int n = Integer.parseInt(number.substring(i, i + 1));
-            if (alternate) {
-                n *= 2;
-                if (n > 9) {
-                    n = (n % 10) + 1;
-                }
-            }
-            sum += n;
-            alternate = !alternate;
-        }
-
-        return (10 - (sum % 10)) % 10;
-    }*/
-
-    public boolean isValid(long number)
+    public boolean isValid(long number) // verifica la validez de una tarjeta
     {
-        return (getSize(number) >= 13 &&
-                getSize(number) <= 16) &&
-                (prefixMatched(number, 4)
-                        || prefixMatched(number, 5)
-                        || prefixMatched(number, 37)
-                        || prefixMatched(number, 6)) &&
-                ((sumOfDoubleEvenPlace(number) + sumOfOddPlace(number)) % 10 == 0);
+        return (getSize(number) >= 13 && //busca que el numero de tarjeta sea mayor o igual a 13
+                getSize(number) <= 16) && //busca que el numero de tarjeta sea menor o igual a 16
+                (prefixMatched(number, 4) //revisa que el prefijo sea 4 (Visa)
+                        || prefixMatched(number, 5)//revisa que el prefijo sea 5 (Master Card)
+                        || prefixMatched(number, 37)//revisa que el prefijo sea 37 (Master Card)
+                        || prefixMatched(number, 6))  //revisa que el prefijo sea 6 (Discover)
+                         && ((sumOfDoubleEvenPlace(number) + sumOfOddPlace(number)) % 10 == 0); // y que finmalmente corre el algoritmo de luhn para la ultima verificacion
     }
 
-    public int getFacilitador(long number){
-        if(prefixMatched(number, 4)){
-            return 1;
+    public int getFacilitador(long number){ // devuelve el facilitador para guardar en la base de datos
+        if(prefixMatched(number, 4)){ // revisa si el prefijo es 4
+            return 1;//devuelve el id en la base de datos para visa
         }
-        if(prefixMatched(number, 5)){
-            return 2;
+        if(prefixMatched(number, 5)){ //revisa que el prefijo sea 5
+            return 2;//devuelve el id en la base de datos para mastercard
         }
-        if(prefixMatched(number, 37)){
-            return 3;
+        if(prefixMatched(number, 37)){//revisa que el prfijo sea 37
+            return 3;//devuelve el id de la base de datos para american express
         }
-        if(prefixMatched(number, 6)){
-            return 4;
+        if(prefixMatched(number, 6)){//revisa que el prefijo sea 6
+            return 4;//devuelve el id en la base de datos para discover
         }
-        return 5;
+        return 5;// no aplico ninguno (por el metodo de verificacion nunca se ocupa)
     }
 
-    // Get the result from Step 2
+
     public static int sumOfDoubleEvenPlace(long number)
     {
-        int sum = 0;
-        String num = number + "";
-        for (int i = getSize(number) - 2; i >= 0; i -= 2)
-            sum += getDigit(Integer.parseInt(num.charAt(i) + "") * 2);
+        int sum = 0; // inicia la suma que se retona
+        String num = number + ""; //cambia numero a string
+        for (int i = getSize(number) - 2; i >= 0; i -= 2) // de derecha a izquierda  solamente usa los valores en pociciones par
+            sum += getDigit(Integer.parseInt(num.charAt(i) + "") * 2); // suma los valores cuando se multiplican *dos el digito y se hace get digit
 
-        return sum;
+        return sum;// retorno de la suma de numeros de derecha a izquierda multiplicado por 2 y sumados
     }
 
-    // Return this number if it is a single digit, otherwise,
-    // return the sum of the two digits
+
     public static int getDigit(int number)
     {
-        if (number < 9) {
-            return number;
+        if (number < 9) { // revisa que sea menor a un digito de dos espacios (10,11,12 ect)
+            return number; //regresa el numero
         }
-        return number / 10 + number % 10;
+        return number / 10 + number % 10; // separa los dos digitos y los suma
     }
 
-    // Return sum of odd-place digits in number
-    public static int sumOfOddPlace(long number) {
-        int sum = 0;
-        String num = number + "";
-        for (int i = getSize(number) - 1; i >= 0; i -= 2) {
-            sum += Integer.parseInt(num.charAt(i) + "");
+
+    public static int sumOfOddPlace(long number) { // suma las pociciones impar
+        int sum = 0;// inicio de suma a retornar
+        String num = number + ""; //cambia numero a un string
+        for (int i = getSize(number) - 1; i >= 0; i -= 2) {  // de derecha a izquierda busca en las pociciones inpar
+            sum += Integer.parseInt(num.charAt(i) + ""); // suma el valor en la pocicion a suma
         }
-        return sum;
+        return sum;// retorna la suma total de los numeros en pociciones inpar
     }
 
-    // Return true if the digit d is a prefix for number
-    public static boolean prefixMatched(long number, int d)
+
+    public static boolean prefixMatched(long number, int d) // funcion que se verifico que el prefijo era igual
     {
-        return getPrefix(number, getSize(d)) == d;
+        return getPrefix(number, getSize(d)) == d; // regresa true si el prefijo es igual a la variable d
     }
 
-    // Return the number of digits in d
+
     public static int getSize(long d)
     {
-        String num = d + "";
-        return num.length();
+        String num = d + "";//cambia a sting
+        return num.length();//regresa tamanio de digito
     }
 
-    // Return the first k number of digits from
-    // number. If the number of digits in number
-    // is less than k, return number.
-    public static long getPrefix(long number, int k)
+
+    public static long getPrefix(long number, int k) // encuentra el prifjo
     {
-        if (getSize(number) > k) {
-            String num = number + "";
-            return Long.parseLong(num.substring(0, k));
+        if (getSize(number) > k) { // revisa q el numero sea mas grande que lo que se busca
+            String num = number + ""; // cambia num a string
+            return Long.parseLong(num.substring(0, k));//  manda  la pocicion donde  se revisa y que sea igual a k
         }
-        return number;
+        return number;// regresa numero
     }
 }

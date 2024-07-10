@@ -11,9 +11,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
+<?import javafx.scene.control.CheckBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.TarjetaController" fx:id="ancPane">
     <children>
-        <ListView fx:id="listaTarjeta" layoutX="14.0" layoutY="134.0" prefHeight="287.0" prefWidth="604.0" />
+        <ListView fx:id="listaTarjeta" layoutX="14.0" layoutY="160.0" prefHeight="287.0" prefWidth="604.0" />
+        <ChoiceBox fx:id="tipoTarjeta" layoutX="437.0" layoutY="14.0" prefHeight="10.0" prefWidth="120.0"/>
+        <Label layoutX="320.0" layoutY="18.0" text="Tipo de Tarjeta:" />
         <Button onAction="#agregarTarjeta" layoutX="50.0" layoutY="94.0" mnemonicParsing="false" text="Agregar Tarjeta" />
         <Button onAction="#eliminarTarjeta" layoutX="170.0" layoutY="94.0" mnemonicParsing="false" text="Eliminar Tarjeta" />
         <Button onAction="#actualizarTarjeta" layoutX="290.0" layoutY="94.0" mnemonicParsing="false" text="Actualizar Tarjeta" />
@@ -23,7 +26,7 @@
         <TextField fx:id="idCliente" layoutX="437.0" layoutY="51.0" prefHeight="25.0" prefWidth="64.0" editable="false" />
         <Label  layoutX="10.0" layoutY="18.0" text="Numero de Tarjeta" />
         <Label layoutX="14.0" layoutY="55.0" text="Fecha Expiracion:" />
-        <Label fx:id="error" layoutX="315.0" layoutY="18.0" style="-fx-text-fill: red" />
+        <Label fx:id="error" layoutX="20.0" layoutY="140.0" style="-fx-text-fill: red" />
         <Label layoutX="325.0" layoutY="55.0" text="ID del propietario:" />
     </children>
 </AnchorPane>
