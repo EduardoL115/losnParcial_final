@@ -3,6 +3,7 @@ package org.example.parcial3;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.io.BufferedWriter;
@@ -23,7 +24,7 @@ public class ReporteBController {
     @FXML
     public TextField txtAnio;//00377223 id asignado al anio
     @FXML
-    public TextField txtVistaPrevia;//00377223 id asignado a la vista previa del reporte
+    public TextArea txtVistaPrevia;//00377223 id asignado a la vista previa del reporte
 
     ResultSet rs; //00377223 sera el conjunto de datos encontrados, teniendo en cuenta la query
     PreparedStatement pst; //00377223 es la query que se manda a la base de datos
@@ -76,7 +77,7 @@ public class ReporteBController {
                 "FROM " +//00377223 se seleccionara de:
                 "CLIENTE cl\n" + //00377223 se declara un alias para la tabla CLIENTE
                 "INNER JOIN TARJETA t ON cl.id = t.FK_id_cliente\n" + //00377223 se hace un inner join para tener el conjunto donde el id de CLIENTE y la fk del id cliente en TARJETA coincidan
-                "INNER JOIN COMPRA c ON T.id = c.FK_id_tarjeta\n" + //00377223 se hace un inner join para tener el conjunto donde el id de TARJETA y la fk del id tarjeta en COMPRA coincidan y poder agarrar los datos del SELECT
+                "INNER JOIN COMPRA c ON t.id = c.FK_id_tarjeta\n" + //00377223 se hace un inner join para tener el conjunto donde el id de TARJETA y la fk del id tarjeta en COMPRA coincidan y poder agarrar los datos del SELECT
                 "WHERE cl.id = ?\n" +//00377223 con la condicion que el id de CLIENTE sea el que el reporte solicite
                 "AND YEAR(c.fecha_compra) = ?\n" +//00377223 tambien la condicon del anio
                 "AND MONTH(c.fecha_compra) = ?;");//00377223 y la de mes
