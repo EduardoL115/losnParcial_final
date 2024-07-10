@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D36B63;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parciaal3.ReportesController" fx:id="ancPane">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D36B63;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.ReportesController" fx:id="ancPane">
    <children>
       <Button layoutX="97.0" layoutY="80.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="127.0" text="ReporteA" onAction="#reporteA"/>
-      <Button layoutX="376.0" layoutY="237.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="127.0" text="ReporteD" />
-      <Button layoutX="97.0" layoutY="237.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="127.0" text="ReporteC" />
+      <Button layoutX="376.0" layoutY="237.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="127.0" text="ReporteD" onAction="#reporteD" />
+      <Button layoutX="97.0" layoutY="237.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="127.0" text="ReporteC" onAction="#reporteC"/>
       <Button layoutX="376.0" layoutY="80.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="127.0" text="ReporteB" onAction="#reporteB"/>
    </children>
 </AnchorPane>

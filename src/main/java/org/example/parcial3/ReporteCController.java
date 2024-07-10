@@ -1,7 +1,6 @@
 package org.example.parcial3;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -35,7 +34,7 @@ public class ReporteCController {
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss"); //00377223 se crea un formato de fecha para guardar la fecha en el formato que se dio
 
     @FXML
-    public void mostrarReporte() throws SQLException {//00377223 se ejecuta cuando se presiona el boton Mostrar Reporte
+    public void onMostrarReporte() throws SQLException {//00377223 se ejecuta cuando se presiona el boton Mostrar Reporte
         if (txtIDUsuario.getText().isEmpty()) {//00377223 condicion por si los parametros estan vacios
             Alert alert = new Alert(Alert.AlertType.ERROR);//00377223 el tipo de alerta es de un error
             alert.setTitle("Error");//00377223 se setea un titulo para la alerta
@@ -48,7 +47,7 @@ public class ReporteCController {
     }
 
     @FXML
-    public void guardarReporte() throws SQLException {//00377223 se encarga de guardar el reporte con la ruta que ya se instancio
+    public void onGuardarReporte() throws SQLException {//00377223 se encarga de guardar el reporte con la ruta que ya se instancio
         if (txtIDUsuario.getText().isEmpty()) {//00377223 condicion por si los parametros estan vacios
             Alert alert = new Alert(Alert.AlertType.ERROR);//00377223 el tipo de alerta es de un error
             alert.setTitle("Error");//00377223 se setea un titulo para la alerta
@@ -105,7 +104,7 @@ public class ReporteCController {
         }
         StringBuilder sb = new StringBuilder();//00377223 en este StringBuilder se guardaran los datos a retornar
 
-        String datosEnReporte = "Id: " + txtIDUsuario.getText() + ".\n";//00377223 se crea una string con los datos que se ingresaron para el reporte
+        String datosEnReporte = "ID Usuario: " + txtIDUsuario.getText() + ".\n";//00377223 se crea una string con los datos que se ingresaron para el reporte
         sb.append(datosEnReporte);//00377223 se agrega el ID correspondiente a lo que se solicito en la cadena que se retornara
 
         sb.append("\nTarjetas de credito:\n");//00377223 se declaran las tarjetas de credito en la cadena

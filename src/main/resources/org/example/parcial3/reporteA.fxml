@@ -11,9 +11,9 @@
       <TextField fx:id="txtIDUsuario" layoutX="137.0" layoutY="46.0" />
       <DatePicker fx:id="dateFechaInicio" layoutX="137.0" layoutY="80.0" />
       <DatePicker fx:id="dateFechaFin" layoutX="137.0" layoutY="110.0" />
-      <Button layoutX="365.0" layoutY="45.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="205.0" text="Mostrar Reporte" onAction="#onMostrarReporte"/>
-      <Button layoutX="365.0" layoutY="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="205.0" text="Guardar Reporte" onAction="#onGuardarReporte"/>
+      <Button layoutX="365.0" layoutY="45.0" mnemonicParsing="false" onAction="#onMostrarReporte" prefHeight="26.0" prefWidth="205.0" text="Mostrar Reporte" />
+      <Button layoutX="365.0" layoutY="80.0" mnemonicParsing="false" onAction="#onGuardarReporte" prefHeight="26.0" prefWidth="205.0" text="Guardar Reporte" />
       <Button layoutX="365.0" layoutY="115.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="205.0" text="Volver" />
-      <TextArea layoutX="33.0" layoutY="158.0" prefHeight="200.0" prefWidth="534.0" fx:id="txtVistaPrevia"/>
+      <TextArea fx:id="txtVistaPrevia" editable="false" layoutX="33.0" layoutY="158.0" prefHeight="200.0" prefWidth="534.0" />
    </children>
 </AnchorPane>

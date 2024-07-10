@@ -83,13 +83,13 @@ public class ReporteAController {
 
         rs = pst.executeQuery(); //00377223 se ejecuta la query y los datos se guardan en esta variable
 
-        String datosEnReporte = "Id: " + txtIDUsuario.getText() + " - Fecha de inicio: " + dateFechaInicio.getValue().toString() + " - Fecha de fin: " + dateFechaFin.getValue().toString() + ".\n\n";//00377223 se crea una string con los datos que se ingresaron para el reporte
+        String datosEnReporte = "ID Usuario: " + txtIDUsuario.getText() + " - Fecha de inicio: " + dateFechaInicio.getValue().toString() + " - Fecha de fin: " + dateFechaFin.getValue().toString() + ".\n\n";//00377223 se crea una string con los datos que se ingresaron para el reporte
 
         StringBuilder sb = new StringBuilder();//00377223 se crea un objeto StringBuilder que sera donde se guardaran todos los datos en cadena
         sb.append(datosEnReporte);//00377223 se agrega datosEnReporte para saber con que parametros se llego al reporte
 
         while (rs.next()) {//00377223 se recorreran todas la filas del resultado de la query
-            datosReporte = "Fecha: " + rs.getString("fecha_compra") + ". Monto: $" + rs.getString("dinero_gastado") + ". Descripcion: " + rs.getString("descripcion") + ".\n"; //00377223 se guardan los datos en una cadena de texto
+            datosReporte = "Fecha: " + rs.getString("fecha_compra") + ". Monto: $" + String.format("%.2f",rs.getDouble("dinero_gastado")) + ". Descripcion: " + rs.getString("descripcion") + ".\n"; //00377223 se guardan los datos en una cadena de texto
             sb.append(datosReporte);//00377223 se agregan al StringBuilder previamente creado
         }
         return sb.toString();//00377223 retornamos StringBuilder en un String

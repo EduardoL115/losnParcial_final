@@ -2,7 +2,6 @@ package org.example.parcial3;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -34,7 +33,7 @@ public class ReporteBController {
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss"); //00377223 se crea un formato de fecha para guardar la fecha en el formato que se dio
 
     @FXML
-    public void mostrarReporte() throws SQLException {//00377223 se ejecuta cuando se presiona el boton Mostrar Reporte
+    public void onMostrarReporte() throws SQLException {//00377223 se ejecuta cuando se presiona el boton Mostrar Reporte
         if (txtIDUsuario.getText().isEmpty() || txtMes.getText().isEmpty() || txtAnio.getText().isEmpty()) {//00377223 condicion por si los parametros estan vacios
             Alert alert = new Alert(Alert.AlertType.ERROR);//00377223 el tipo de alerta es de un error
             alert.setTitle("Error");//00377223 se setea un titulo para la alerta
@@ -47,7 +46,7 @@ public class ReporteBController {
     }
 
     @FXML
-    public void guardarReporte() throws SQLException {//00377223 se encarga de guardar el reporte con la ruta que ya se instancio
+    public void onGuardarReporte() throws SQLException {//00377223 se encarga de guardar el reporte con la ruta que ya se instancio
         if (txtIDUsuario.getText().isEmpty() || txtMes.getText().isEmpty() || txtAnio.getText().isEmpty()) {//00377223 condicion por si los parametros estan vacios
             Alert alert = new Alert(Alert.AlertType.ERROR);//00377223 el tipo de alerta es de un error
             alert.setTitle("Error");//00377223 se setea un titulo para la alerta
@@ -88,7 +87,7 @@ public class ReporteBController {
 
         rs = pst.executeQuery(); //00377223 se ejecuta la query y los datos se guardan en esta variable
 
-        String datosEnReporte = "Id: " + txtIDUsuario.getText() + ". Mes: " + txtMes.getText() + ". Anio: " + txtAnio.getText() + ".\n\n";//00377223 se crea una string con los datos que se ingresaron para el reporte
+        String datosEnReporte = "ID Usuario: " + txtIDUsuario.getText() + ". Mes: " + txtMes.getText() + ". Anio: " + txtAnio.getText() + ".\n\n";//00377223 se crea una string con los datos que se ingresaron para el reporte
 
         StringBuilder sb = new StringBuilder();//00377223 se crea un objeto StringBuilder que sera donde se guardaran todos los datos en cadena
         sb.append(datosEnReporte);//00377223 se agregan al StringBuilder previamente creado
