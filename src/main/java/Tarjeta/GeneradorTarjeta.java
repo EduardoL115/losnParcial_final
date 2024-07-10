@@ -14,7 +14,7 @@ public class GeneradorTarjeta { // verifica que el numero de tarjeta sea valido 
                         || prefixMatched(number, 5)//revisa que el prefijo sea 5 (Master Card)
                         || prefixMatched(number, 37)//revisa que el prefijo sea 37 (Master Card)
                         || prefixMatched(number, 6))  //revisa que el prefijo sea 6 (Discover)
-                         && ((sumOfDoubleEvenPlace(number) + sumOfOddPlace(number)) % 10 == 0); // y que finmalmente corre el algoritmo de luhn para la ultima verificacion
+                && ((sumOfDoubleEvenPlace(number) + sumOfOddPlace(number)) % 10 == 0); // y que finmalmente corre el algoritmo de luhn para la ultima verificacion
     }
 
     public int getFacilitador(long number){ // devuelve el facilitador para guardar en la base de datos

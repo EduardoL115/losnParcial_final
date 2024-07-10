@@ -4,42 +4,55 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 
-public class ReportesController implements Initializable {
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+public class ReportesController{//00377223 controlador de Tab_Reportes
 
     @FXML
-    private AnchorPane ancPane;
+    private AnchorPane ancPane; //00377223 id asignado al AnchorPane que es la ventana de Tab_Reportes en Inicio
 
 
     @FXML
-    public void reporteA(ActionEvent actionEvent) throws IOException {
-        try {
-            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("reporteA.fxml")));
-            ancPane.getChildren().setAll(view);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void reporteA(ActionEvent actionEvent) throws IOException { //00377223 cambio de Tab_Reportes a Reporte A en el mismo lugar
+        try { //00377223 try para encontrar el fxml
+            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("reporteA.fxml")));//00377223 le asigna view a la ruta de reporteA.fxml
+            ancPane.getChildren().setAll(view);//00377223 muestra view donde esta Tab_Reportes
+        } catch (IOException e) {//00377223 por si no se encuentra el fxml
+            throw new RuntimeException(e);//00377223 si hay error lo muestra
         }
     }
 
     @FXML
-    public void reporteB(ActionEvent actionEvent) throws IOException {
-        try {
-            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("reporteB.fxml")));
-            ancPane.getChildren().setAll(view);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void reporteB(ActionEvent actionEvent) throws IOException { //00377223 cambio de Tab_Reportes a Reporte B en el mismo lugar
+        try { //00377223 try para encontrar el fxml
+            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("reporteB.fxml")));//00377223 le asigna view a la ruta de reporteB.fxml
+            ancPane.getChildren().setAll(view);//00377223 muestra view donde esta Tab_Reportes
+        } catch (IOException e) {//00377223 por si no se encuentra el fxml
+            throw new RuntimeException(e);//00377223 causa del error
         }
     }
 
+    @FXML
+    public void reporteC(ActionEvent actionEvent) throws IOException { //00377223 cambio de Tab_Reportes a Reporte B en el mismo lugar
+        try { //00377223 try para encontrar el fxml
+            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("reporteC.fxml")));//00377223 le asigna view a la ruta de reporteC.fxml
+            ancPane.getChildren().setAll(view);//00377223 muestra view donde esta Tab_Reportes
+        } catch (IOException e) {//00377223 por si no se encuentra el fxml
+            throw new RuntimeException(e);//00377223 causa del error
+        }
+    }
 
+    @FXML
+    public void reporteD(ActionEvent actionEvent) throws IOException { //00377223 cambio de Tab_Reportes a Reporte B en el mismo lugar
+        try { //00377223 try para encontrar el fxml
+            AnchorPane view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("reporteD.fxml")));//00377223 le asigna view a la ruta de reporteC.fxml
+            ancPane.getChildren().setAll(view);//00377223 muestra view donde esta Tab_Reportes
+        } catch (IOException e) {//00377223 por si no se encuentra el fxml
+            throw new RuntimeException(e);//00377223 causa del error
+        }
+    }
 }

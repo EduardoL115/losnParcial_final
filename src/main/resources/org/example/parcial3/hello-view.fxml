@@ -6,21 +6,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.text.Text?>
 <AnchorPane fx:id="ancPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.HelloController">
    <children>
-      <Label layoutX="10.0" layoutY="140.0" fx:id="error" style="-fx-text-fill: red" />
+      <Label fx:id="error" layoutX="10.0" layoutY="140.0" style="-fx-text-fill: red" />
       <ListView fx:id="lista" layoutX="12.0" layoutY="160.0" prefHeight="300.0" prefWidth="580.0" />
       <Button layoutX="24.0" layoutY="102.0" mnemonicParsing="false" onAction="#insercionClientes" text="Agregar Cliente" />
-      <Button onAction="#eliminarCliente"  layoutX="129.0" layoutY="102.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Eliminar Cliente" />
+      <Button layoutX="129.0" layoutY="102.0" mnemonicParsing="false" onAction="#eliminarCliente" prefHeight="25.0" prefWidth="113.0" text="Eliminar Cliente" />
       <Button layoutX="387.0" layoutY="102.0" mnemonicParsing="false" onAction="#RegistrarTarjeta" text="Registrar Tarjeta" />
+      <Button layoutX="507.0" layoutY="102.0" mnemonicParsing="false" onAction="#RegistrarCompra" prefHeight="25.0" prefWidth="120.0" text="Registrar Compras" />
       <TextField fx:id="nombreCompletoTxt" layoutX="129.0" layoutY="24.0" prefHeight="25.0" prefWidth="251.0" />
       <TextField fx:id="telefonoTxt" layoutX="443.0" layoutY="24.0" prefHeight="25.0" prefWidth="156.0" />
       <TextField fx:id="direccionTxt" layoutX="80.0" layoutY="61.0" prefHeight="25.0" prefWidth="519.0" />
       <Label layoutX="20.0" layoutY="28.0" text="Nombre Completo:" />
       <Label layoutX="20.0" layoutY="65.0" text="Direccion:" />
       <Label layoutX="389.0" layoutY="28.0" text="Telefono:" />
-      <Button onAction="#actualziarCliente" layoutX="255.0" layoutY="102.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Actualizar Cliente" />
-      <Button layoutX="507.0" layoutY="102.0" mnemonicParsing="false" onAction="#volver" prefHeight="25.0" prefWidth="61.0" text="Volver" />
+      <Button layoutX="255.0" layoutY="102.0" mnemonicParsing="false" onAction="#actualziarCliente" prefHeight="25.0" prefWidth="113.0" text="Actualizar Cliente" />
+      <Button layoutX="650.0" layoutY="102.0" mnemonicParsing="false" onAction="#volver" prefHeight="25.0" prefWidth="61.0" text="Volver" />
    </children>
 </AnchorPane>

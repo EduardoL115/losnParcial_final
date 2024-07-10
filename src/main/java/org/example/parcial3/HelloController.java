@@ -29,9 +29,6 @@ public class HelloController implements Initializable {
 
     Statement st = cn.createStatement();// statement de la query
 
-
-
-
     @FXML
     private AnchorPane ancPane;//id asignado al AnchorPane fxml
     private String id = "0"; //variable de tipo String que almacena localmente el valor de id de la base de datos
@@ -46,9 +43,6 @@ public class HelloController implements Initializable {
 
     @FXML
     public Label error; // id asignado a label que muestra error
-
-
-
 
     public HelloController() throws SQLException {}//constructor
 
@@ -65,17 +59,18 @@ public class HelloController implements Initializable {
     @FXML
     public void mostrarClientes() throws SQLException { // funcio muestra  la  lista de clientes
         lista.getItems().clear();// limpia la lista
-        rs = st.executeQuery("SELECT * FROM CLIENTE"); // devuelve resultados de query
+        rs = st.executeQuery("SELECT * FROM CLIENTE");// devuelve resultados de query
 
-        while(rs.next()){
-            String record = rs.getInt("id") + "/" + rs.getString("nombre_completo") + "/" + rs.getString("direccion") + "/" + rs.getString("telefono") + "/";lista.getItems().add(record); // busca las feilds y las asigna a sus correspondientes lugares
+        while(rs.next()){//bucle para poder ver todos los clientes
+            String record = rs.getInt("id") + "/" + rs.getString("nombre_completo") + "/" + rs.getString("direccion") + "/" + rs.getString("telefono") + "/";// busca las feilds y las asigna a sus correspondientes lugares
+            lista.getItems().add(record); //guarda los datos del cliente en la lista
         }
 
-        lista.setOnMouseClicked(new EventHandler<MouseEvent>() { // revisa los clicks en la lista
+        lista.setOnMouseClicked(new EventHandler<MouseEvent>() {// revisa los clicks en la lista
             @Override
-            public void handle(MouseEvent mouseEvent) { // busca los events de el mous click y selecciona el item de la lista
+            public void handle(MouseEvent mouseEvent) {// busca los events de el mous click y selecciona el item de la lista
 
-                String str = lista.getSelectionModel().getSelectedItem().toString(); // pasa el item seleccionado de la lista a string
+                String str = lista.getSelectionModel().getSelectedItem().toString();// pasa el item seleccionado de la lista a string
                 String[] arrOfStr = str.split("/");//separa la string en otras cada "/" y  los guarda en un array de string
                 int i = 1; // inicio de contador
                 for (String a : arrOfStr) { // traversa el array de string
@@ -99,7 +94,7 @@ public class HelloController implements Initializable {
      * @throws SQLException
      */
     @FXML
-    public void insercionClientes() throws SQLException { //
+    public void insercionClientes() throws SQLException { //funcion para poder agregar clientes a la base de datos
         if(!nombreCompletoTxt.getText().isBlank()|| !direccionTxt.getText().isBlank() || !telefonoTxt.getText().isBlank()) {// mientras las casillas de datos no esten vacias
             pst = cn.prepareStatement("INSERT INTO CLIENTE (nombre_completo,direccion,telefono) VALUES (?,?,?)");// crear query
             pst.setString(1, nombreCompletoTxt.getText());// asignar valores de casilla a querry
@@ -119,7 +114,7 @@ public class HelloController implements Initializable {
      * @throws SQLException
      */
     @FXML
-    public void eliminarCliente() throws SQLException { // funcion para eliminar cliente de la base de datos
+    public void eliminarCliente() throws SQLException {
         pst = cn.prepareStatement("DELETE FROM CLIENTE WHERE id = ?"); // query para borrar  el record
         pst.setInt(1, Integer.parseInt(getId())); // mada el id a borrar
         pst.executeUpdate(); // ejecuta querry
@@ -131,7 +126,7 @@ public class HelloController implements Initializable {
     }
 
     @FXML
-    public void actualziarCliente() throws SQLException { // funcion para modificar los clientes
+    public void actualziarCliente() throws SQLException {
         pst = cn.prepareStatement("UPDATE CLIENTE SET nombre_completo = ?, direccion = ?, telefono = ? WHERE id = ?"); // crear query a evaluar
         pst.setString(1, nombreCompletoTxt.getText()); // ocupa el parametro de la textfeild
         pst.setString(2,direccionTxt.getText());// ocupa el parametro de la textfeild
@@ -148,7 +143,6 @@ public class HelloController implements Initializable {
     private void RegistrarTarjeta(ActionEvent event) throws IOException { //funcion para el boton de registrar tarjeta, sirve para poder cambiar de escena a la siguiente la cual su funcionalidad es registrar tarjetas
 
         if(getId() != "0") {
-
             try {//try asignar una fxml
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("tarjeta.fxml"))); // crea un objeto de FXMLLoader para guardar la ubicacion de el fxml
                 AnchorPane view = loader.load();//guarda loader y la direccion en el una nuevo Objeto de anchor pane
@@ -163,9 +157,33 @@ public class HelloController implements Initializable {
             } catch (IOException e) {//catch error al no poder encontra fxml
                 throw new RuntimeException(e);//mensaje error en caso que no se pueda cargar el fxml
             }
-            error.setText(" ");
+            error.setText(" "); //pone al error sin valor para demostrar que ya no hay errores
         }else{
-            error.setText("* Debe seleccionar un Cliente!");
+            error.setText("* Debe seleccionar un Cliente!");//se pone ese texto en el error para asi poder avisar al empleado
+        }
+    }
+
+    @FXML
+    public void RegistrarCompra(ActionEvent event){
+        if(getId() != "0") {
+            try {//try asignar una fxml
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("RegistrosCompras.fxml"))); // crea un objeto de FXMLLoader para guardar la ubicacion de el fxml
+                AnchorPane view = loader.load();//guarda loader y la direccion en el una nuevo Objeto de anchor pane
+                CompraController cc = loader.getController();//crea un objeto compraController agarando el controller asignado a el fxml en loader
+
+                try {//try coneccion a la base de datos
+
+                    cc.obtenerId(id);// llama una funcion para llenar la lista de tarjeta con la informacion del id seleccionado en la lista de esta clase
+                } catch (SQLException e) {// catch error al no connectar a la base de datos
+                    throw new RuntimeException(e);// revisa si no se logro conectar a la base d e datos;
+                }
+                ancPane.getChildren().setAll(view);// cambia lo que se muestra en el anchor pane que se esta mostrando en la parte central
+            } catch (IOException e) {//catch error al no poder encontra fxml
+                throw new RuntimeException(e);//mensaje error en caso que no se pueda cargar el fxml
+            }
+            error.setText(" ");//pone al error sin valor para demostrar que ya no hay errores
+        }else{//segunda opcion por si falla la primera
+            error.setText("* Debe seleccionar un Cliente!");//se pone ese texto en el error para asi poder avisar al empleado
         }
     }
 
@@ -181,11 +199,11 @@ public class HelloController implements Initializable {
 
     }
 
-    public String getId() {
-        return id;
+    public String getId() {//getter para devolver el id del cliente
+        return id;//devuelve el id del cliente
     }//getter id
 
-    public void setId(String id) {
-        this.id = id;
-    }//setter id
+    public void setId(String id) {//setter para poder actualziar el id del cliente seleccionado
+        this.id = id;//obtiene el id del cliente
+    }
 }

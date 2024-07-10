@@ -1,0 +1,10 @@
+ID Usuario: 1 - Fecha de inicio: 2024-02-13 - Fecha de fin: 2028-08-11.
+
+Fecha: 2024-03-05. Monto: $120.50. Descripcion: Supermercado.
+Fecha: 2024-02-20. Monto: $89.99. Descripcion: Ropa.
+Fecha: 2024-02-20. Monto: $19.99. Descripcion: Ropa.
+Fecha: 2024-02-20. Monto: $89.99. Descripcion: Ropa.
+Fecha: 2024-02-20. Monto: $70.00. Descripcion: Ropa.
+Fecha: 2024-02-20. Monto: $10.00. Descripcion: Ropa.
+Fecha: 2024-02-20. Monto: $19.99. Descripcion: Ropa.
+Fecha: 2024-02-20. Monto: $19.99. Descripcion: Ropa.

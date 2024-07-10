@@ -8,7 +8,7 @@ public final class DB {
 
     private static volatile Connection cn = null;
 
-    public static Connection getInstance() {   // singlton para la coneccion a la base de datos
+    public static Connection getInstance() {   // singleton para la coneccion a la base de datos
         if (cn == null) {   // revisa que no hay instancia del singleton
             try {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); //driver utilizado para conectar a la base de datos

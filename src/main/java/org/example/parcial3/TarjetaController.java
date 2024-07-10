@@ -18,7 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class TarjetaController { // controlador para fxml Tarjeta
+public class TarjetaController {
 
     @FXML
     private AnchorPane ancPane;// id de anchor pane utilizado en el fxml
@@ -26,9 +26,9 @@ public class TarjetaController { // controlador para fxml Tarjeta
 
     PreparedStatement pst; // donde se manda el stement
 
-    Connection cn = DB.getInstance(); // revisa coneccion al singleton
+    Connection cn = DB.getInstance(); // revisa coneccion al singletonv
 
-    Statement st = cn.createStatement(); //es donde se guarda la quary
+    Statement st = cn.createStatement(); //es donde se guarda la query
 
 
     @FXML
@@ -52,7 +52,6 @@ public class TarjetaController { // controlador para fxml Tarjeta
     private String id = "0",idTarjeta;  // guradan id de cliente y id de tarjeta
 
     GeneradorTarjeta generadorTarjeta = new GeneradorTarjeta(); // objeto de la verificacion de la tarjeta
-
 
     public TarjetaController() throws SQLException {} //constructor
 
@@ -82,9 +81,7 @@ public class TarjetaController { // controlador para fxml Tarjeta
                     + rs.getString("nombreTipoTarjeta") + "/"; // consigue el nombre de la tarjeta
 
             listaTarjeta.getItems().add(record); // muestra los resultados en la lista
-
         }
-
         listaTarjeta.setOnMouseClicked(new EventHandler<MouseEvent>() { // activa un on mouse click event para los miembros de la lista
             @Override
             public void handle(MouseEvent mouseEvent) { // funcion acargo de ejecutar los clicks en un mouse
@@ -108,8 +105,9 @@ public class TarjetaController { // controlador para fxml Tarjeta
         });
     }
 
+    @FXML
     public void agregarTarjeta() throws SQLException { //funcion para incertar nueva tarjeta
-        if((!numeroTarjetaTxt.getText().isBlank() || fechaExpiracion.getValue() != null) && !existe(numeroTarjetaTxt.getText())) { //si las casillas de datos estan nulas y la tarjeta no existe
+        if ((!numeroTarjetaTxt.getText().isBlank() || fechaExpiracion.getValue() != null) && !existe(numeroTarjetaTxt.getText())) { //si las casillas de datos estan nulas y la tarjeta no existe
             if (generadorTarjeta.isValid(Long.parseLong(numeroTarjetaTxt.getText()))) { // revisa si la tarjeta es valida
                 pst = cn.prepareStatement("INSERT INTO TARJETA (numero_tarjeta,fecha_expiracion,FK_id_facilitador,FK_id_cliente,FK_id_tipo_tarjeta) VALUES (?,?,?,?,?)"); // prepara una query para agregar tarjeta
                 pst.setString(1, numeroTarjetaTxt.getText());// ingresa el valor de el teextfeild numero de tarjeta
@@ -123,19 +121,24 @@ public class TarjetaController { // controlador para fxml Tarjeta
             } else { // si todas casillas estan vacias y no existe
                 error.setText("*Ingrese una tarjeta valida!");// imprimir erorr de tarjeta no valida
             }
-        }else{
+        } else {
             error.setText("*Debe ingresar los datos que se le piden en las casillas!"); // imprime error de llenar
         }
     }
     @FXML
     public void eliminarTarjeta() throws SQLException { //funcion para eliminar una tarjeta de la base de datos
-        pst = cn.prepareStatement("DELETE FROM TARJETA WHERE id = ?"); // preparacion para el query y borrar datos
-        pst.setInt(1, Integer.parseInt(idTarjeta)); // manda el id donde borrar datos
-        pst.executeUpdate(); // ejecuta la query
-        numeroTarjetaTxt.setText("");// limpia el texfeild
-        fechaExpiracion.setValue(null);// limpia la fecha de expiracion
-        tipoTarjeta.setValue("");// limpia el textfeild
-        mostrarTarjetas();// muestra la lista con el update de tarjetas
+        try {
+            pst = cn.prepareStatement("DELETE FROM TARJETA WHERE id = ?"); // preparacion para el query y borrar datos
+            pst.setInt(1, Integer.parseInt(idTarjeta)); // manda el id donde borrar datos
+            System.out.println(idTarjeta);
+            pst.executeUpdate(); // ejecuta la query
+            numeroTarjetaTxt.setText("");// limpia el texfeild
+            fechaExpiracion.setValue(null);// limpia la fecha de expiracion
+            tipoTarjeta.setValue("");// limpia el textfeild
+            mostrarTarjetas();// muestra la lista con el update de tarjetas
+        }catch(SQLException e){
+            error.setText("*No puede eliminar una tarjeta asociada a una compra");
+        }
     }
 
     @FXML
@@ -146,7 +149,7 @@ public class TarjetaController { // controlador para fxml Tarjeta
             pst.setDate(2, Date.valueOf(fechaExpiracion.getValue()));// utiliza valor de Facha expiracion
             pst.setInt(3,generadorTarjeta.getFacilitador(Long.parseLong(numeroTarjetaTxt.getText())) );// verifica y utiliza el valor de la tarjeta
             pst.setInt(4, getTipoTarjetaId());// cambia el id de la tarjeta por lo de la text field
-            pst.setInt(5, Integer.parseInt(id)); // utiliza la combo box para recibir el valor del tipo de tarjeta
+            pst.setInt(5, Integer.parseInt(idTarjeta)); // utiliza la combo box para recibir el valor del tipo de tarjeta
             pst.executeUpdate(); // hace la query con los nuevos datos
             mostrarTarjetas(); // muestra la update de la lista de tarjeta
             error.setText(" ");//reinicia la lista y muestra su update
@@ -172,10 +175,11 @@ public class TarjetaController { // controlador para fxml Tarjeta
     @FXML
     public int getTipoTarjetaId() { // regresa el tipo de tarjeta que es en el combo box
         if (Objects.equals(tipoTarjeta.getValue().toString(), "Credito")) { // comparacion entre num tarjeta de base de datos y el valor ingresado
+            System.out.println("credito");
             return 1;// return id tipo tarjeta
         } else {
+            System.out.println("debito");
             return 2;// return id tipo tarjeta
-
         }
     }
 
@@ -184,13 +188,12 @@ public class TarjetaController { // controlador para fxml Tarjeta
         pst.setInt(1, Integer.parseInt(id));// parametors de el query
         rs = pst.executeQuery();// ejecuta el query y regresa tabla
         while (rs.next()){ // mientra lo tabla tenga valores
-
             if(Objects.equals(rs.getString("numero_tarjeta"), numTarjeta)){ // si el numero de la tarjeta es gual a la base de datos return true
                 return true;// regresa que la tarjeta existe
             }
 
         }
-        return false;// la tarjeta no existe
+        return false;
     }
 
     @FXML
@@ -210,3 +213,4 @@ public class TarjetaController { // controlador para fxml Tarjeta
         }
     }
 }
+
