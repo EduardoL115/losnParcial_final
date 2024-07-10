@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="ancPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.ReporteCController">
+   <children>
+      <Label layoutX="59.0" layoutY="50.0" text="ID Usuario:" />
+      <TextArea fx:id="txtVistaPrevia" layoutX="38.0" layoutY="156.0" prefHeight="220.0" prefWidth="526.0" />
+      <TextField fx:id="txtIDUsuario" layoutX="137.0" layoutY="45.0" />
+      <Button layoutX="365.0" layoutY="45.0" mnemonicParsing="false" text="Mostrar Reporte" prefHeight="26.0" prefWidth="205.0" onAction="#onMostrarReporte"/>
+      <Button layoutX="365.0" layoutY="80.0" mnemonicParsing="false" text="Guardar Reporte" prefHeight="26.0" prefWidth="205.0" onAction="#onGuardarReporte"/>
+      <Button layoutX="365.0" layoutY="115.0" mnemonicParsing="false" text="Volver" prefHeight="26.0" prefWidth="205.0" onAction="#volver"/>
+   </children>
+</AnchorPane>

@@ -4,14 +4,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-min-height: 100%; -fx-min-width: 100%;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.InicioControler">
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" style="-fx-min-height: 100%; -fx-min-width: 100%;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.InicioControler">
    <left>
-      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #4D6D71;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="80.0" style="-fx-background-color: #4D6D71;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnRegistrar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#Registrar" prefHeight="70.0" text="Registrar">
                <VBox.margin>
@@ -46,12 +47,15 @@
    <top>
       <Pane prefHeight="80.0" prefWidth="626.0" style="-fx-background-color: #4D6D71;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="131.0" layoutY="7.0" prefHeight="72.0" prefWidth="370.0" text="Compania culera de mierda" textAlignment="JUSTIFY">
+            <Label layoutX="131.0" layoutY="7.0" prefHeight="72.0" prefWidth="525.0" text="Banco Central de Nlogonia" textAlignment="JUSTIFY">
                <font>
-                  <Font size="29.0" />
+                  <Font name="Franklin Gothic Demi" size="43.0" />
                </font>
             </Label>
          </children>
       </Pane>
    </top>
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

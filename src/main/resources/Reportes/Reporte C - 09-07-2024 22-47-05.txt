@@ -1,0 +1,8 @@
+ID Usuario: 1.
+
+Tarjetas de credito:
+XXXXXX3456
+XXXXXX0795
+
+Tarjetas de debito:
+N/A

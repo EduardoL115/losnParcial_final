@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D36B63;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="ancPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D36B63;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.parcial3.ReportesController">
    <children>
-      <Label layoutX="125.0" layoutY="132.0" prefHeight="77.0" prefWidth="344.0" text="reportes">
-         <font>
-            <Font size="63.0" />
-         </font>
-      </Label>
+      <Button layoutX="97.0" layoutY="80.0" mnemonicParsing="false" onAction="#reporteA" prefHeight="50.0" prefWidth="127.0" text="ReporteA" />
+      <Button layoutX="376.0" layoutY="237.0" mnemonicParsing="false" onAction="#reporteD" prefHeight="50.0" prefWidth="127.0" text="ReporteD" />
+      <Button layoutX="97.0" layoutY="237.0" mnemonicParsing="false" onAction="#reporteC" prefHeight="50.0" prefWidth="127.0" text="ReporteC" />
+      <Button layoutX="376.0" layoutY="80.0" mnemonicParsing="false" onAction="#reporteB" prefHeight="50.0" prefWidth="127.0" text="ReporteB" />
    </children>
 </AnchorPane>
